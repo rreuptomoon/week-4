@@ -1,17 +1,20 @@
 
-from ast import arg
-from pdb import post_mortem
+from unicodedata import name
+from unittest import result
 from flask import Flask,  redirect, url_for
 from flask import request
 from flask import session
 from flask import render_template
 app=Flask(__name__ , static_folder="public",static_url_path="/")
-app.secret_key="test you page!"
+app.secret_key="test your page!"
+
+
+
+
 
 @app.route("/")
-def index():
-    return render_template("index.html")
-
+def home():
+    return render_template("home.html")
 
 @app.route("/signin", methods=["POST"])
 def signin():
@@ -20,31 +23,41 @@ def signin():
     if name =="test" and password =="test":  # if  filter the name &password
         session["name"]= name
         return redirect(url_for("member"))
-    elif name == "" or password == "":          #name or password empty
-        return redirect(url_for("error",mystring="Please Entry Your Name & Password!! "))
     else:
-        return redirect(url_for("error",mystring="You got Wrong Entry, Please try again!"))
+        return redirect(url_for("error",name=name,password=password))
+        #pass the name=name,password=password to error page
 
-        #pass the string to error page
-
-@app.route("/member",methods=["POST","GET"])
+@app.route("/member")
 def member():
-    if "name" in session:       # set up the session 
-        name=session["name"]
-        session.pop("name",None)    # prevent /member with out password entry
-        return render_template("member.html")
+    if request.method=="GET":   #get method judge have session id or not
+        sId=session.get("name",None)
+        if not sId:
+            return redirect(url_for("home"))
+    if request.method=="POST":      #post method  
+        sId = session.get("name",None)
+        if not sId:
+            return redirect(url_for("home")) # if not to home 
     else:
-        return render_template("index.html")
+        return render_template("member.html")
 
-@app.route("/logout",methods=["POST","GET"])    # set the logout to index.page
+
+@app.route("/logout")    # set the logout to home.page
 def logout():
         session.pop("name",None)
-        return redirect(url_for("index"))
+        return redirect(url_for("home"))
 
 
-@app.route("/error/<string:mystring>") # receive the string and display to page
-def error(mystring):
-    return render_template("error.html",mystring=mystring)
+@app.route("/error") # receive the name &password and show the query string
+def error():
+    name=request.args.get("name")
+    password=request.args.get("password")
+    mystring=""
+    if name== "" or password == "":          
+        #name or password empty
+        return render_template("error.html",mystring="Please Entry Your Name & Password!!")
+    else:
+        return render_template("error.html",mystring="You got Wrong Entry, Please try again!")
+   
+       
 
-    
 app.run(port=3000)

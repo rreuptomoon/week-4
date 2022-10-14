@@ -41,7 +41,7 @@
         padding: 3px 10px;
         box-sizing: border-box;
       }
-      .boxDown button {
+      .boxDown a {
         background-color: white;
         color: #434141;
         border: 1px solid #ccc;
@@ -55,7 +55,7 @@
         cursor: pointer;
         border-radius: 24px;
       }
-      .boxDown button:hover {
+      .boxDown a:hover {
         background-color: rgb(158, 186, 105);
         color: white;
       }
@@ -63,14 +63,14 @@
   </head>
   <body>
     <div class="mainBox">
-      <form action="/member" method="POST">
+      <form action="/member">
         <div class="boxTop">
           <h1>Hello</h1>
           <h3>This is your member page !</h3>
         </div>
         <div class="boxDown">
           <h3>Congratulation, You are succeed login !!</h3>
-          <button href="/logout">LogOut</button>
+          <a href="/logout">LogOut</a>
         </div>
       </form>
     </div>

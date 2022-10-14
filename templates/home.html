@@ -13,7 +13,7 @@
       .mainBox {
         width: 600px;
         height: 300px;
-        margin: 120px auto;
+        margin: 65px auto;
         border: 1px solid #ccc;
         border-radius: 120px;
         overflow: hidden;
@@ -26,6 +26,9 @@
       }
       .boxTop h1 {
         padding-top: 20px;
+      }
+      .boxTop .h_Two {
+        padding-top: 50px;
       }
       .boxDown {
         text-align: center;
@@ -41,7 +44,8 @@
         padding: 3px 10px;
         box-sizing: border-box;
       }
-      .boxDown button {
+      .boxDown button,
+      .num_submit {
         background-color: white;
         color: #434141;
         border: 1px solid #ccc;
@@ -55,7 +59,8 @@
         cursor: pointer;
         border-radius: 24px;
       }
-      .boxDown button:hover {
+      .boxDown button:hover,
+      .num_submit:hover {
         background-color: rgb(158, 186, 105);
         color: white;
       }
@@ -74,6 +79,17 @@
           Password : <input type="password" name="password" />
           <br />
           <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+    <div class="mainBox">
+      <form action="">
+        <div class="boxTop">
+          <h3 class="h_Two">Please entry your number!</h3>
+        </div>
+        <div class="boxDown">
+          Number : <input type="text" /><br />
+          <a class="num_submit" href="">Result!</a>
         </div>
       </form>
     </div>

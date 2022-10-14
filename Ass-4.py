@@ -5,11 +5,10 @@ from flask import Flask,  redirect, url_for
 from flask import request
 from flask import session
 from flask import render_template
+import cmath
+from numpy import empty
 app=Flask(__name__ , static_folder="public",static_url_path="/")
 app.secret_key="test your page!"
-
-
-
 
 
 @app.route("/")
@@ -23,20 +22,21 @@ def signin():
     if name =="test" and password =="test":  # if  filter the name &password
         session["name"]= name
         return redirect(url_for("member"))
+    elif name== "" or password == "":          
+        #name or password empty
+        empty="Please Entry Your Name & Password!!"
+        return redirect(url_for("error",empty=empty))
     else:
-        return redirect(url_for("error",name=name,password=password))
+        wrong_entry="You got Wrong Entry,Please try again!"
+        return redirect(url_for("error",wrong_entry=wrong_entry))
         #pass the name=name,password=password to error page
 
 @app.route("/member")
 def member():
-    if request.method=="GET":   #get method judge have session id or not
-        sId=session.get("name",None)
-        if not sId:
+    sId=session.get("name",None)
+     #get method judge have session id or not 
+    if not sId:
             return redirect(url_for("home"))
-    if request.method=="POST":      #post method  
-        sId = session.get("name",None)
-        if not sId:
-            return redirect(url_for("home")) # if not to home 
     else:
         return render_template("member.html")
 
@@ -46,18 +46,27 @@ def logout():
         session.pop("name",None)
         return redirect(url_for("home"))
 
-
 @app.route("/error") # receive the name &password and show the query string
 def error():
-    name=request.args.get("name")
-    password=request.args.get("password")
+    empty=request.args.get("empty")
+    wrong_entry=request.args.get("wrong_entry")
     mystring=""
-    if name== "" or password == "":          
+    if empty:          
         #name or password empty
-        return render_template("error.html",mystring="Please Entry Your Name & Password!!")
+        return render_template("error.html",empty=empty)
     else:
-        return render_template("error.html",mystring="You got Wrong Entry, Please try again!")
+        return render_template("error.html",wrong_entry=wrong_entry)
    
-       
+# @app.route("/calculate")
+# def calculate():
+#     number = request.args.get("number")
+#     num_sqrt = number**0.5
+#     return redirect(url_for("results",number=number,num_sqrt=num_sqrt))
+
+# @app.route("/results")
+# def results():
+#     number = request.args.get("number")
+#     num_sqrt=request.args.get("num_sqrt")
+
 
 app.run(port=3000)

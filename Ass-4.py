@@ -1,12 +1,9 @@
-
-from unicodedata import name
 from unittest import result
 from flask import Flask,  redirect, url_for
 from flask import request
 from flask import session
 from flask import render_template
 import cmath
-from numpy import empty
 app=Flask(__name__ , static_folder="public",static_url_path="/")
 app.secret_key="test your page!"
 
@@ -27,7 +24,7 @@ def signin():
         empty="Please Entry Your Name & Password!!"
         return redirect(url_for("error",empty=empty))
     else:
-        wrong_entry="You got Wrong Entry,Please try again!"
+        wrong_entry="You Got Wrong Entry,Please Try Again!"
         return redirect(url_for("error",wrong_entry=wrong_entry))
         #pass the name=name,password=password to error page
 

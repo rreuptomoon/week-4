@@ -50,7 +50,6 @@ def logout():
 def error():
     empty=request.args.get("empty")
     wrong_entry=request.args.get("wrong_entry")
-    mystring=""
     if empty:          
         #name or password empty
         return render_template("error.html",empty=empty)
